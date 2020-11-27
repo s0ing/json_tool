@@ -15,18 +15,18 @@ class GetValue2(object):
         else:
             self.dicts = dicts
 
-    def get_values(self, key, default=None,deep=False,filters=False,shell=False,ret_type="int"):
+    def get_values(self, key, default=None,deep=False,filters=False,shell=False,ret_type=False):
         """
         :param key: Key value to be resolved 需要解析的key值
         :param default: If the result is empty, the default value is none  如果结果为空 备用值 默认None
         :param deep: Do you want to deeply resolve all keys? Default false 是否深度解析所有key 默认False
         :param filters: Whether to de duplicate the result, the default is false 是否去重结果 默认False
         :param shell: If the result is whether to remove the outer list shell, the default is false 如果结果为一个 是否去掉外面list壳子 默认False（去壳）
-        :param ret_type: Return result type 返回结果类型
+        :param ret_type: The return result type can pass in 'int' or 'str' by default  返回结果类型 可传入'int'或'str' 默认原始
         :return:
         """
         self.filters = filters
-        self.str_or_int = ret_type
+        self.ret_type = ret_type
         self.results = []
         self.deep_search(self.dicts, key) if deep else self.__search(self.dicts, key)
         res = self.flat(self.results)
@@ -60,8 +60,11 @@ class GetValue2(object):
             if isinstance(i, list):
                 res.extend(self.flat(i))
             else:
-                if type(i) == int and self.str_or_int == "str":
-                    i = str(i)
+                if self.ret_type:
+                    try:
+                        i = self.ret_type(i)
+                    except:
+                        pass
                 if self.filters:
                     if i not in res:
                         res.append(i)
