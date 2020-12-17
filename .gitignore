@@ -2,6 +2,7 @@
 *.pyc
 .idea
 /dist
+/json_extract.egg-info
 # User-specific stuff:
 .idea/**/workspace.xml
 .idea/**/tasks.xml

@@ -30,9 +30,12 @@ class GetValue2(object):
         self.results = []
         self.deep_search(self.dicts, key) if deep else self.__search(self.dicts, key)
         res = self.flat(self.results)
-        if not shell:
+        if shell:
+            res = res if isinstance(res,list) else [res]
+            default = [default] if not isinstance(default, list) else default
+        else:
             res = res[0] if len(res) == 1 else res
-        return default if not res else res
+        return res if res else default
 
     def __search(self,dicts,key):
         if type(dicts) == list:
