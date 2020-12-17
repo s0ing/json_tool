@@ -9,12 +9,12 @@
 
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name='json_extract',
-    version='1.1.0',
+    version='1.1.1',
     author='lsl',
     author_email='952597205@qq.com',
     url='https://github.com/TIM952597205/json_tool',
